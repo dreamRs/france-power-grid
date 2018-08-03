@@ -1,0 +1,7 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+datas/raw.rds
+token-mapbox
+*.Rproj
