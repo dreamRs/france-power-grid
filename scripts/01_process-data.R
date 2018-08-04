@@ -23,7 +23,7 @@ library( janitor )
 fr_cons <- fread("https://data.enedis.fr/explore/dataset/consommation-electrique-par-secteur-dactivite-iris/download/?format=csv&timezone=Europe/Berlin&use_labels_for_header=true")
 saveRDS(fr_cons, file = "datas/raw.rds")
 
-fr_cons <- readRDS(file = "datas/raw.rds")
+# fr_cons <- readRDS(file = "datas/raw.rds")
 
 # Clean names
 setnames(fr_cons, names(fr_cons), stringr::str_conv(names(fr_cons), "UTF-8"))

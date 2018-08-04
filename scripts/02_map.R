@@ -25,20 +25,24 @@ token <- readLines("token-mapbox")
 fr_cons <- readRDS(file = "datas/fr_cons_2016.rds")
 
 
+# Only Ile-de-France (Paris region)
 idf_resid <- fr_cons[!is.na(nb_sites_residentiel) & code_departement %in% c(75, 77, 78, 91, 92, 93, 94, 95)]
 idf_resid <- idf_resid[rep(seq_len(.N), times = nb_sites_residentiel)]
 
+# Only residential housings
 fr_resid <- fr_cons[!is.na(nb_sites_residentiel)]
 fr_resid <- fr_resid[rep(seq_len(.N), times = ceiling(nb_sites_residentiel/10))]
 
+# Mean consumption by housing
 fr_resid_consomoy <- fr_cons[!is.na(nb_sites_residentiel)]
 fr_resid_consomoy[, conso_moy := log1p(conso_totale_residentiel_m_wh / nb_sites_residentiel)]
 fr_resid_consomoy <- fr_resid_consomoy[!is.na(conso_moy)]
 fr_resid_consomoy <- fr_resid_consomoy[rep(seq_len(.N), times = scales::rescale(conso_moy, to = c(1, 100)))]
 
+
+# Consumption
 fr_resid_conso <- fr_cons[!is.na(nb_sites_residentiel) & !is.na(conso_totale_residentiel_m_wh)]
 fr_resid_conso[, conso_log := log1p(conso_totale_residentiel_m_wh)]
-
 fr_resid_conso <- fr_resid_conso[rep(seq_len(.N), times = scales::rescale(conso_log, to = c(1, 100)))]
 
 
@@ -89,7 +93,7 @@ m <- mapdeck(
 
 htmltools::html_print(html = m, viewer = browseURL)
 
-htmlwidgets::saveWidget(m, file = "index.html", selfcontained = FALSE)
+# htmlwidgets::saveWidget(m, file = "index.html", selfcontained = FALSE)
 
 
 # France (average consumption)
